@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import mongoose from 'mongoose';  // ← Add this
 import authRoutes from './routes/authRoutes.js';
+import productRoutes from './routes/productRoutes.js';  // ← Add this
 
 dotenv.config();
 connectDB();
@@ -15,6 +16,11 @@ app.use(express.json());
 // Routes
 app.use('/api/auth', authRoutes);
 
+//for testing
+import Product from './models/Product.js';  // ← Add this
+
+
+
 // Test route
 app.get('/', (req, res) => {
   res.json({
@@ -23,15 +29,7 @@ app.get('/', (req, res) => {
   });
 });
 
-// Health check + Database status
-// app.get('/api/health', (req, res) => {
-//   res.status(200).json({
-//     success: true,
-//     message: 'API is healthy',
-//     database: mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected',  // ← Add this
-//     timestamp: new Date().toISOString()
-//   });
-// });
+app.use('/api/products', productRoutes);  // ← Add this
 
 const PORT = process.env.PORT || 5000;
 
